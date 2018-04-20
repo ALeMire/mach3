@@ -9,6 +9,7 @@ const inPlace = require('metalsmith-in-place')
 const sass = require('metalsmith-sass')
 const yaml = require('js-yaml')
 const connect = require('gulp-connect')
+const contentful = require('contentful-metalsmith')
 const config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
 
 gulp.task('build::clean', function() {
@@ -32,6 +33,11 @@ gulp.task('pug::compile', function() {
       typekit_url: config.typekit_url
       }  
     )
+    .use(contentful({
+      access_token: config.access_token,
+      space_id: config.space_id,
+      common: config.common
+    }))
     .use(inPlace({
       engine: 'pug',
       pattern: '**/*.pug',

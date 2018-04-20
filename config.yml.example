@@ -10,3 +10,15 @@ dev_port: 8000
 
 # example variable to pass to templates
 typekit_url: 'https://typekit.com'
+
+# contentful variables
+space_id: 'XXXXXXX'
+access_token: 'XXXXXXX'
+common: {
+  example: {
+    limit: '1',
+    filter: {
+      'sys.id[in]': 'XXXXXXXXXXXXXXX'
+    }
+  }
+}
