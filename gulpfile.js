@@ -15,16 +15,20 @@ const deploy = require('gulp-gh-pages')
 const config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
 const webconfig = yaml.safeLoad(fs.readFileSync(config.src + '/config.yml', 'utf8'))
 
+for(var i=0;i<config.build_excludes.length;i++){
+    config.build_excludes[i]="!"+config.src+config.build_excludes[i];
+}
+
 gulp.task('build::clean', function() {
   return del([
     path.join(config.dest,'/**/*')], {force: true}
   ).then(paths => {
       console.log('Files and folders that were deleted:\n', paths.join('\n'))
-})
+  })
 })
 
-gulp.task('pug::compile', function() {
-  return gulp.src(config.src+'/*')
+gulp.task('pug::compile', function(done) {
+  gulp.src([config.src+'/*'].concat(config.build_excludes))
   .pipe(gulpFM()).on('data', function(file) {
     if (!_.isEmpty(file.frontMatter)) {
     _.assign(file, file.frontMatter)
@@ -49,6 +53,7 @@ gulp.task('pug::compile', function() {
       }
     })))
   .pipe(gulp.dest(config.dest))
+  done()
 })
 
 gulp.task('sass::compile', function(done) {

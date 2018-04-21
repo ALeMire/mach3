@@ -7,3 +7,6 @@ src: mach3-example.com
 # gulp-connect-variables
 dev_host: '192.168.1.100'
 dev_port: 8000
+
+# directeries to exclude from gulp build stream
+build_excludes: [ '/README.md', '/config.yml*' ]
