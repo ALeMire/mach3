@@ -51,16 +51,18 @@ gulp.task('pug::compile', function() {
   .pipe(gulp.dest(config.dest))
 })
 
-gulp.task('sass::compile', function() {
-  return gulp.src(config.src+'/styles/**/*')
+gulp.task('sass::compile', function(done) {
+  gulp.src(path.join(config.src,'/styles/**/*'))
   .pipe(metalsmith()
     .use(sass({
       outputStyle: 'compressed',
       sourceMap: true,
       sourceMapContents: true,
-      outputDir: 'css'
+      outputDir: 'css',
+      includePaths: [path.join(config.src,'/styles')]
     })))
   .pipe(gulp.dest(config.dest))
+  done()
 })
 
 gulp.task('dev::watch', function(done){
