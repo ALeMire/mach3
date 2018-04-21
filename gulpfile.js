@@ -11,7 +11,9 @@ const yaml = require('js-yaml')
 const connect = require('gulp-connect')
 const contentful = require('contentful-metalsmith')
 const deploy = require('gulp-gh-pages')
+
 const config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
+const webconfig = yaml.safeLoad(fs.readFileSync(config.src + '/config.yml', 'utf8'))
 
 gulp.task('build::clean', function() {
   return del([
@@ -31,13 +33,13 @@ gulp.task('pug::compile', function() {
   })
   .pipe(metalsmith()
     .metadata({
-      typekit_url: config.typekit_url
+      typekit_url: webconfig.typekit_url
       }  
     )
     .use(contentful({
-      access_token: config.access_token,
-      space_id: config.space_id,
-      common: config.common
+      access_token: webconfig.access_token,
+      space_id: webconfig.space_id,
+      common: webconfig.common
     }))
     .use(inPlace({
       engine: 'pug',
