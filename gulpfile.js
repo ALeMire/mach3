@@ -10,6 +10,7 @@ const sass = require('metalsmith-sass')
 const yaml = require('js-yaml')
 const connect = require('gulp-connect')
 const contentful = require('contentful-metalsmith')
+const deploy = require('gulp-gh-pages')
 const config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
 
 gulp.task('build::clean', function() {
@@ -75,5 +76,12 @@ gulp.task('dev::server', function(done){
  done() 
 })
 
+gulp.task('deploy::gh-pages', function (done){
+  gulp.src(config.dest + '/**/*')
+  .pipe(deploy())
+  done()
+})
+
 gulp.task('default', gulp.series('build::clean', 'pug::compile', 'sass::compile'))
+gulp.task('deploy', gulp.series('build::clean', 'pug::compile', 'sass::compile', 'deploy::gh-pages'))
 gulp.task('develop', gulp.parallel('dev::watch', 'dev::server'))

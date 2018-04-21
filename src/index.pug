@@ -9,5 +9,6 @@ html
   body
     h1 #{title}
     p A static site builder using gulp, metalsmith, and gulpsmith.
-    if common.example
-      img(src='https:' + common.example.items[0].fields.image.fields.file.url)
+    ul 
+      each val in data.entries
+        li= val.sys.id
