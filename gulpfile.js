@@ -11,6 +11,7 @@ const yaml = require('js-yaml')
 const connect = require('gulp-connect')
 const contentful = require('contentful-metalsmith')
 const deploy = require('gulp-gh-pages')
+const webpack = require('webpack-stream')
 
 const config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'))
 const webconfig = yaml.safeLoad(fs.readFileSync(config.src + '/config.yml', 'utf8'))
@@ -25,6 +26,14 @@ gulp.task('build::clean', function() {
   ).then(paths => {
       console.log('Files and folders that were deleted:\n', paths.join('\n'))
   })
+})
+
+gulp.task('webpack::compile', function(done) {
+  gulp.src(config.src+'/*.js')
+    .pipe(webpack( require('./webpack.config.js')
+    ))
+    .pipe(gulp.dest(config.dest))
+  done()
 })
 
 gulp.task('pug::compile', function(done) {

@@ -24,9 +24,10 @@
     "gulp-gh-pages": "^0.5.4",
     "gulpsmith": "^0.6.0",
     "jstransformer-pug": "^0.3.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "metalsmith": "^2.3.0",
     "metalsmith-in-place": "^4.1.1",
-    "metalsmith-sass": "^1.5.1"
+    "metalsmith-sass": "^1.5.1",
+    "webpack-stream": "^4.0.3"
   }
 }
